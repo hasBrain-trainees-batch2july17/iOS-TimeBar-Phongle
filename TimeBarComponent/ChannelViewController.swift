@@ -62,16 +62,32 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
         var limited: (top: CGFloat, bot: CGFloat) = (0, 0)
         limited.top = hidght / 10
         limited.bot = hidght - hidght / 10
-    
+        let total = limited.bot - limited.top
         
         let translation = panGesture.translation(in: self.view)
         let centerY = panGesture.view!.center.y
+        
+        let position = centerY - limited.top
+        
+        print(position / total)
+        
         if centerY <= limited.top {
             panGesture.view!.center = CGPoint(x: panGesture.view!.center.x, y: limited.top + 1)
         }else if centerY >= limited.bot{
             panGesture.view!.center = CGPoint(x: panGesture.view!.center.x, y: limited.bot - 1)
         }else{
             panGesture.view!.center = CGPoint(x: panGesture.view!.center.x, y: centerY + translation.y)
+        }
+        
+        switch panGesture.state {
+        case .began:
+            ()
+        case .changed:
+            ()
+        case .ended:
+            print("ended")
+        default:
+            ()
         }
         
         
@@ -90,7 +106,7 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 50
+        return 20
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
