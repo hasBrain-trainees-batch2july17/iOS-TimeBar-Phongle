@@ -24,10 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         self.window?.makeKeyAndVisible()
         
-        let t = DateHelper.date(from: "2017,11,08 11:03")
-        for channel in schedule {
-            print(channel.getProgram(at: t)?.title)
-        }
         return true
         
     }

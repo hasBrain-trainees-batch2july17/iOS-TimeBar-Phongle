@@ -8,18 +8,19 @@
 
 import UIKit
 
+
 private let reuseIdentifier = "channelCell"
 
 class ChannelViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
-    
+    var listProgram = [(channel: String, program: ProgramModel)]()
     
     // ThumbView's element
     let thumbViewContainer: UIView = {
         var thumb = UIView()
         thumb.backgroundColor = UIColor.white
         thumb.frame = CGRect(x: 0, y: 100, width: 150, height: 40)
-        thumb.alpha = 0.5
+        thumb.alpha = 0.3
         return thumb
     }()
     let thumbViewTime: UILabel = {
@@ -63,13 +64,17 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
         limited.top = hidght / 10
         limited.bot = hidght - hidght / 10
         let total = limited.bot - limited.top
+        let timeTotal = maxTime.timeIntervalSince(minTime)
         
         let translation = panGesture.translation(in: self.view)
         let centerY = panGesture.view!.center.y
         
         let position = centerY - limited.top
         
-        print(position / total)
+        let percent = position / total
+        let timeChanged: Int = Int(CGFloat(timeTotal) * percent)
+        let t = Calendar.current.date(byAdding: .second, value: timeChanged, to: minTime)
+        
         
         if centerY <= limited.top {
             panGesture.view!.center = CGPoint(x: panGesture.view!.center.x, y: limited.top + 1)
@@ -81,11 +86,26 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
         
         switch panGesture.state {
         case .began:
-            ()
-        case .changed:
-            ()
+            UIView.animate(withDuration: 0.3, animations: {
+                self.thumbViewContainer.alpha = 1
+            })        case .changed:
+            thumbViewTime.text = "\(DateHelper.string(from: t!))"
         case .ended:
             print("ended")
+            var list = [(channel: String, program: ProgramModel)]()
+            for channel in schedule {
+                if let prog = channel.getProgram(at: t!) {
+                    list.append((channel: channel.name!, program: prog))
+                }
+            }
+            listProgram = list
+            collectionView?.reloadData()
+            print("time changed: \(DateHelper.string(from: t!))")
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self.thumbViewContainer.alpha = 0.3
+            })
+            
         default:
             ()
         }
@@ -106,13 +126,15 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 20
+        return listProgram.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ChannelCell
         // Configure the cell
-        
+        cell.channelName.text = listProgram[indexPath.row].channel
+        cell.programName.text = listProgram[indexPath.row].program.title
+        cell.thumbnailView.backgroundColor = listProgram[indexPath.row].program.thumbnail
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

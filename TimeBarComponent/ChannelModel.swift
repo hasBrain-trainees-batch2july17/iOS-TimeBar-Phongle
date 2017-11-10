@@ -37,6 +37,8 @@ extension Date {
     }
 }
 
+let minTime = DateHelper.date(from: "2017,11,08 05:00")
+let maxTime = DateHelper.date(from: "2017,11,08 11:59")
 var schedule: [ChannelModel] = {
     var s = [ChannelModel]()
     
