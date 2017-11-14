@@ -137,7 +137,25 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
         // Configure the cell
         cell.channelName.text = listProgram[indexPath.row].channel
         cell.programName.text = listProgram[indexPath.row].program.title
-        cell.thumbnailView.backgroundColor = listProgram[indexPath.row].program.thumbnail
+        cell.thumbnailView.backgroundColor = listProgram[indexPath.row].program.thumbnailColor
+        let image = listProgram[indexPath.row].program.thumbnailLink
+        let imageURL = "https://image.tmdb.org/t/p/w370_and_h556_bestv2\(image)"
+        
+        if let img = listProgram[indexPath.row].program.thumbnailImage {
+            cell.thumbnailView.image = img
+        }else {
+            if let imgDownload = Downloader.downloadImageWithURL(imageURL) {
+                // save image
+                listProgram[indexPath.row].program.thumbnailImage = imgDownload
+                //update view on main thread
+                OperationQueue.main.addOperation({
+                    cell.thumbnailView.image = self.listProgram[indexPath.row].program.thumbnailImage
+                })
+            }
+        }
+        
+        
+        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

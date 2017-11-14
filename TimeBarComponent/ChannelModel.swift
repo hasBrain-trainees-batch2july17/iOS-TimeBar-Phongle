@@ -17,7 +17,7 @@ class ChannelModel {
     
     func getProgram(at time: Date)->ProgramModel?{
         for item in programs {
-            if (item.timeStart?.compare(lessThan: time))! && (item.timeEnd?.compare(greaterThan: time))! {
+            if (item.timeStart.compare(lessThan: time)) && (item.timeEnd.compare(greaterThan: time)) {
                 return item
             }
         }
