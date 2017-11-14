@@ -27,6 +27,7 @@ class ChannelCell: BaseCell {
         
         return label
     }()
+    
     let channelName: UILabel = {
         var label = UILabel()
         label.text = "channel's name"
@@ -35,18 +36,26 @@ class ChannelCell: BaseCell {
         return label
     }()
     
+    var channelImage: UIImageView = {
+        var image = UIImageView()
+        image.backgroundColor = UIColor.random()
+        return image
+    }()
+    
     override func setupViews() {
 //        frame.size = CGSize(width: 200, height: 100)
         // add subview to container
         addSubview(programName)
         addSubview(thumbnailView)
-        addSubview(channelName)
-        
+//        addSubview(channelName)
+        addSubview(channelImage)
+        channelImage = channelImage.addRadus(radiusPerHeight: 25, borderWidth: 2, borderColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)) as! UIImageView
         // setup constraint for element
         self.addConstraints(with: "H:|-4-[v0]-4-|", views: thumbnailView)
         self.addConstraints(with: "H:|-4-[v0]-4-|", views: programName)
-        self.addConstraints(with: "H:|-4-[v0]-4-|", views: channelName)
-        self.addConstraints(with: "V:|-4-[v2(26)]-[v0]-[v1(26)]-4-|", views: thumbnailView, programName, channelName)
+        self.addConstraints(with: "H:|-4-[v0(50)]", views: channelImage)
+        self.addConstraints(with: "V:|-4-[v0(50)]", views: channelImage)
+        self.addConstraints(with: "V:|-4-[v0]-[v1(26)]-4-|", views: thumbnailView, programName)
     }
 }
 

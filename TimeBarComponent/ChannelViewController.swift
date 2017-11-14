@@ -13,6 +13,8 @@ private let reuseIdentifier = "channelCell"
 
 class ChannelViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
+    var list = [TimeDisplay]()
+    var timeDisplayChoosed = [ProgramMdl]()
     var listProgram = [(channel: String, program: ProgramModel)]()
     
     // ThumbView's element
@@ -42,11 +44,18 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.collectionView!.register(ChannelCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
+        
+        self.collectionView!.register(ChannelCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        ReadData.readJson { (dict) in
+            let datas = dict["datas"] as! [Any]
+            for time in datas {
+                let timeDisplay = time as! [String: Any]
+                self.list.append( TimeDisplay.init(json: timeDisplay))
+            }
+        }
         // subView manager
         setupView()
-        
         // After load datasource successfully
         thumbViewTime.text = DateHelper.string(from: minTime)
         
@@ -94,16 +103,18 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
             })        case .changed:
             thumbViewTime.text = "\(DateHelper.string(from: t!))"
         case .ended:
+            
             print("ended")
-            var list = [(channel: String, program: ProgramModel)]()
-            for channel in schedule {
-                if let prog = channel.getProgram(at: t!) {
-                    list.append((channel: channel.name!, program: prog))
+            
+            print("time changed: \(DateHelper.string(from: t!))")
+            
+            for time in list {
+                let nextTimeDisplay = Calendar.current.date(byAdding: .hour, value: 1, to: time.time!)
+                if (t?.compare(greaterThan: time.time!))! && (t?.compare(lessThan: nextTimeDisplay!))! {
+                    timeDisplayChoosed = time.programs
+                    self.collectionView?.reloadData()
                 }
             }
-            listProgram = list
-            collectionView?.reloadData()
-            print("time changed: \(DateHelper.string(from: t!))")
             
             UIView.animate(withDuration: 0.3, animations: {
                 self.thumbViewContainer.alpha = 0.3
@@ -129,31 +140,27 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return listProgram.count
+        
+        return timeDisplayChoosed.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ChannelCell
         // Configure the cell
-        cell.channelName.text = listProgram[indexPath.row].channel
-        cell.programName.text = listProgram[indexPath.row].program.title
-        cell.thumbnailView.backgroundColor = listProgram[indexPath.row].program.thumbnailColor
-        let image = listProgram[indexPath.row].program.thumbnailLink
-        let imageURL = "https://image.tmdb.org/t/p/w370_and_h556_bestv2\(image)"
+        cell.channelName.text = timeDisplayChoosed[indexPath.row].channelImageURL
+        cell.programName.text = timeDisplayChoosed[indexPath.row].title
         
-        if let img = listProgram[indexPath.row].program.thumbnailImage {
-            cell.thumbnailView.image = img
-        }else {
-            if let imgDownload = Downloader.downloadImageWithURL(imageURL) {
-                // save image
-                listProgram[indexPath.row].program.thumbnailImage = imgDownload
-                //update view on main thread
-                OperationQueue.main.addOperation({
-                    cell.thumbnailView.image = self.listProgram[indexPath.row].program.thumbnailImage
-                })
-            }
+        if let imgDownload = Downloader.downloadImageWithURL(timeDisplayChoosed[indexPath.row].imageURL) {
+            OperationQueue.main.addOperation({
+                cell.thumbnailView.image = imgDownload
+            })
         }
-        
+        if let imgDownload = Downloader.downloadImageWithURL(timeDisplayChoosed[indexPath.row].channelImageURL) {
+            OperationQueue.main.addOperation({
+                cell.channelImage.image = imgDownload
+            })
+        }
+//
         
         
         return cell

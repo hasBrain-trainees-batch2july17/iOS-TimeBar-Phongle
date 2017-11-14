@@ -19,11 +19,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.main.bounds)
 
         let mainView = ChannelViewController(collectionViewLayout: UICollectionViewFlowLayout())
-        
+
         self.window?.rootViewController = mainView
 
         self.window?.makeKeyAndVisible()
-        
+//        var list = [TimeDisplay]()
+//        ReadData.readJson { (dict) in
+//            let datas = dict["datas"] as! [Any]
+//            for time in datas {
+//                let timeDisplay = time as! [String: Any]
+//                list.append( TimeDisplay.init(json: timeDisplay))
+//            }
+//            print("asd")
+//        }
+//
         return true
         
     }

@@ -18,6 +18,7 @@
 		263B1C791FB2F32C00B1C225 /* ProgramModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263B1C781FB2F32C00B1C225 /* ProgramModel.swift */; };
 		263B1C7B1FB2FC0600B1C225 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263B1C7A1FB2FC0600B1C225 /* Helpers.swift */; };
 		263B1C7D1FB2FC2700B1C225 /* ChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263B1C7C1FB2FC2700B1C225 /* ChannelModel.swift */; };
+		268BB8B71FBAAA04006FC731 /* content_page.json in Resources */ = {isa = PBXBuildFile; fileRef = 268BB8B61FBAAA04006FC731 /* content_page.json */; };
 		26A593961FBA89F700BAA38B /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A593951FBA89F700BAA38B /* DataSource.swift */; };
 		26A593981FBA961700BAA38B /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A593971FBA961700BAA38B /* Downloader.swift */; };
 /* End PBXBuildFile section */
@@ -36,6 +37,7 @@
 		263B1C781FB2F32C00B1C225 /* ProgramModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramModel.swift; sourceTree = "<group>"; };
 		263B1C7A1FB2FC0600B1C225 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		263B1C7C1FB2FC2700B1C225 /* ChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelModel.swift; sourceTree = "<group>"; };
+		268BB8B61FBAAA04006FC731 /* content_page.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = content_page.json; path = ../../Downloads/content_page.json; sourceTree = "<group>"; };
 		26A593951FBA89F700BAA38B /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		26A593971FBA961700BAA38B /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +86,7 @@
 				263B1C7C1FB2FC2700B1C225 /* ChannelModel.swift */,
 				26A593951FBA89F700BAA38B /* DataSource.swift */,
 				263B1C7A1FB2FC0600B1C225 /* Helpers.swift */,
+				268BB8B61FBAAA04006FC731 /* content_page.json */,
 			);
 			path = TimeBarComponent;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				268BB8B71FBAAA04006FC731 /* content_page.json in Resources */,
 				263B1C6B1FB2A1A000B1C225 /* LaunchScreen.storyboard in Resources */,
 				263B1C681FB2A1A000B1C225 /* Assets.xcassets in Resources */,
 				263B1C661FB2A1A000B1C225 /* Main.storyboard in Resources */,

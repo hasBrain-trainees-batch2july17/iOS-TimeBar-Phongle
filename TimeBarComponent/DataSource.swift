@@ -6,8 +6,8 @@
 //  Copyright © 2017 PhongLe. All rights reserved.
 //
 
-let minTime = DateHelper.date(from: "2017,11,08 05:00")
-let maxTime = DateHelper.date(from: "2017,11,08 11:59")
+let minTime = DateHelper.date(from: "2017-09-15T20:00:00Z")
+let maxTime = DateHelper.date(from: "2017-09-15T23:55:00Z")
 var schedule: [ChannelModel] = {
     var s = [ChannelModel]()
     
