@@ -25,7 +25,7 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
     }()
     let thumbViewTime: UILabel = {
         var label = UILabel()
-        label.text = "Wed 10:26 AM 🕐"
+        label.text = "🕐"
         return label
     }()
     func setupView(){
@@ -46,6 +46,9 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
         
         // subView manager
         setupView()
+        
+        // After load datasource successfully
+        thumbViewTime.text = DateHelper.string(from: minTime)
         
         createPanGestureRecognizer(targetView: thumbViewContainer)
         

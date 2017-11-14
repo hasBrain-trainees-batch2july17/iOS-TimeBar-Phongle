@@ -18,6 +18,7 @@
 		263B1C791FB2F32C00B1C225 /* ProgramModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263B1C781FB2F32C00B1C225 /* ProgramModel.swift */; };
 		263B1C7B1FB2FC0600B1C225 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263B1C7A1FB2FC0600B1C225 /* Helpers.swift */; };
 		263B1C7D1FB2FC2700B1C225 /* ChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263B1C7C1FB2FC2700B1C225 /* ChannelModel.swift */; };
+		26A593961FBA89F700BAA38B /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A593951FBA89F700BAA38B /* DataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		263B1C781FB2F32C00B1C225 /* ProgramModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramModel.swift; sourceTree = "<group>"; };
 		263B1C7A1FB2FC0600B1C225 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		263B1C7C1FB2FC2700B1C225 /* ChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelModel.swift; sourceTree = "<group>"; };
+		26A593951FBA89F700BAA38B /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				263B1C741FB2A28E00B1C225 /* BaseCell.swift */,
 				263B1C781FB2F32C00B1C225 /* ProgramModel.swift */,
 				263B1C7C1FB2FC2700B1C225 /* ChannelModel.swift */,
+				26A593951FBA89F700BAA38B /* DataSource.swift */,
 				263B1C7A1FB2FC0600B1C225 /* Helpers.swift */,
 			);
 			path = TimeBarComponent;
@@ -157,6 +160,7 @@
 				263B1C751FB2A28E00B1C225 /* BaseCell.swift in Sources */,
 				263B1C7B1FB2FC0600B1C225 /* Helpers.swift in Sources */,
 				263B1C631FB2A1A000B1C225 /* ViewController.swift in Sources */,
+				26A593961FBA89F700BAA38B /* DataSource.swift in Sources */,
 				263B1C791FB2F32C00B1C225 /* ProgramModel.swift in Sources */,
 				263B1C731FB2A20300B1C225 /* ChannelViewController.swift in Sources */,
 				263B1C611FB2A1A000B1C225 /* AppDelegate.swift in Sources */,
