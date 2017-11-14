@@ -7,6 +7,30 @@
 //
 
 import UIKit
+class Downloader {
+    
+    class func downloadImageWithURL(_ url: String?) -> UIImage? {
+        let data : Data
+        do {
+            data = try Data(contentsOf: URL(string: url!)!)
+            return UIImage(data: (data))
+        }catch {
+            return nil
+        }
+    }
+    class func downloadImage(with url: String?, completion: @escaping (_ data:UIImage?,_ err: String?)->Void){
+        let dispath = DispatchQueue(label: "downloadImage")
+        dispath.async {
+            let data : Data
+            do {
+                data = try Data(contentsOf: URL(string: url!)!)
+                completion(UIImage(data: data), nil)
+            }catch {
+                completion(nil, "Can't load data")
+            }
+        }
+    }
+}
 
 class DateHelper {
     

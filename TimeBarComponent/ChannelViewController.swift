@@ -22,7 +22,7 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
         var thumb = UIView()
         thumb.backgroundColor = UIColor.white
         thumb.frame = CGRect(x: 0, y: 100, width: 150, height: 40)
-        thumb.alpha = 0.3
+        thumb.alpha = 0.7
         return thumb
     }()
     let thumbViewTime: UILabel = {
@@ -30,9 +30,16 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
         label.text = "🕐"
         return label
     }()
+    
     func setupView(){
-        
         //setup thumb's subview
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+        layout.itemSize = CGSize(width: view.bounds.width/2, height: view.bounds.width/2)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        collectionView!.collectionViewLayout = layout
+        
         thumbViewContainer.addSubview(thumbViewTime)
         thumbViewContainer.addConstraints(with: "H:|[v0]|", views: thumbViewTime)
         thumbViewContainer.addConstraints(with: "V:|[v0]|", views: thumbViewTime)
@@ -98,7 +105,7 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
         
         switch panGesture.state {
         case .began:
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.7, animations: {
                 self.thumbViewContainer.alpha = 1
             })        case .changed:
             thumbViewTime.text = "\(DateHelper.string(from: t!))"
@@ -116,14 +123,13 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
                 }
             }
             
-            UIView.animate(withDuration: 0.3, animations: {
-                self.thumbViewContainer.alpha = 0.3
+            UIView.animate(withDuration: 0.7, animations: {
+                self.thumbViewContainer.alpha = 0.7
             })
             
         default:
             ()
         }
-        
         
         panGesture.setTranslation(CGPoint.zero, in: self.view)
     }
@@ -149,26 +155,31 @@ class ChannelViewController: UICollectionViewController, UICollectionViewDelegat
         // Configure the cell
         cell.channelName.text = timeDisplayChoosed[indexPath.row].channelImageURL
         cell.programName.text = timeDisplayChoosed[indexPath.row].title
+        cell.thumbnailView.image = nil
+        cell.channelImage.image = nil
         
-        if let imgDownload = Downloader.downloadImageWithURL(timeDisplayChoosed[indexPath.row].imageURL) {
-            OperationQueue.main.addOperation({
-                cell.thumbnailView.image = imgDownload
-            })
+        Downloader.downloadImage(with: timeDisplayChoosed[indexPath.row].imageURL) { (img, err) in
+            if err != nil {
+                
+            }else {
+                OperationQueue.main.addOperation({
+                    cell.thumbnailView.image = img
+                })
+            }
         }
-        if let imgDownload = Downloader.downloadImageWithURL(timeDisplayChoosed[indexPath.row].channelImageURL) {
-            OperationQueue.main.addOperation({
-                cell.channelImage.image = imgDownload
-            })
+        Downloader.downloadImage(with: timeDisplayChoosed[indexPath.row].channelImageURL) { (img, err) in
+            if err != nil {
+                
+            }else {
+                OperationQueue.main.addOperation({
+                    cell.channelImage.image = img
+                })
+            }
         }
-//
         
         
         return cell
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 200)
-    }
-    
 }
 
 
